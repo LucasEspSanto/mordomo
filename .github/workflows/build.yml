@@ -1,3 +1,4 @@
+
 name: Build Mordomo APK
 
 on:
@@ -8,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -23,13 +25,13 @@ jobs:
       - uses: android-actions/setup-android@v3
 
       - name: Extract project
-        run: unzip -q Mordomo-pronto-para-build.zip -d .
+        run: unzip -q Mordomo-pronto-para-build.zip -d extracted
 
       - name: Build APK
-        working-directory: Mordomo
+        working-directory: extracted/Mordomo
         run: gradle assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
           name: Mordomo-APK
-          path: Mordomo/app/build/outputs/apk/debug/app-debug.apk
+          path: extracted/Mordomo/app/build/outputs/apk/debug/app-debug.apk
